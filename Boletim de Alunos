@@ -1,0 +1,153 @@
+class Boletim:
+
+    def init (self, aluno, nota1, nota2, nota3, falta):
+    
+        self.aluno=aluno
+        self.nota1=nota1
+        self.nota2=nota2
+        self.nota3=nota3
+        self.falta=falta
+  
+    aluno=0 
+    hr=0 
+    nota1=0
+    nota2=0
+    nota3=0 
+    falta=0 
+    salvar_diario=0
+    ini=0
+    pass
+
+alunos = []
+boletins = []
+  
+#A função que ira ser usada 
+def menu (): 
+    print ('Menu:') 
+    print ('   1 - Matricular aluno') 
+    print ('   2 - Remover matricula') 
+    print ('   3 - Lançar notas') 
+    print ('   4 - Lançar faltas') 
+    print ('   5 - Listar alunos matriculados') 
+    print ('   6 - Verificar situaçao de alunos')
+    print ('   7 - Ver o Diário')
+    print ('   9  - Sair') 
+    opt = input('Digite a opçao desejada: ')
+    
+    return opt 
+
+def lancar_notas ():
+    aluno=str(input("Digite o nome do aluno:"))
+    aluno=aluno.upper()
+    for b in boletins:
+        if(b.aluno == aluno):
+            print(b.aluno)
+            boletins.remove(b)
+            b.aluno = aluno
+            nota1=input("Digite a nota 1 do aluno:")
+            b.nota1 = nota1
+            nota2=input("Digite a nota 2 do aluno:")
+            b.nota2 = nota2
+            nota3=input("Digite a nota 3 do aluno:") 
+            b.nota3 = nota3
+            boletins.append(b)
+            break;
+        else:
+            print('Esse Aluno Não Está Matriculado')
+     
+
+def ver_diario ():
+    if len(boletins) > 0:
+        for b in boletins:
+            print("Aluno: " + str(b.aluno))
+            print("Nota1: " + str(b.nota1))
+            print("Nota2: " + str(b.nota2))
+            print("Nota3: " + str(b.nota3))
+            print("Número de faltas: " + str(b.falta))
+            print('----------------')
+    else:
+        print('lista vazia')
+
+
+def listar_alunos ():
+    if len(boletins) > 0:
+        for b in boletins:
+            print("Aluno: " + str(b.aluno))
+            print('----------------')
+    else:
+        print('lista vazia')
+    
+def lancar_faltas ():
+    aluno=str(input("Digite o nome do aluno:"))
+    aluno=aluno.upper()
+    for b in boletins:
+        if(b.aluno == aluno):
+            falta=float(input("Digite as faltas do aluno "+b.aluno+" (em hora):")) 
+            boletins.remove(b)
+            b.falta = falta
+            boletins.append(b)
+            break;
+    else:
+        print('Esse Aluno Não Está Matriculado')
+    pass 
+    
+def remover_matricula (): 
+    aluno=str(input("Digite o nome do aluno:"))
+    aluno = aluno.upper()
+    for a in boletins:
+        if(a.aluno == aluno):
+            boletins.remove(a)
+            print('Aluno Removido')
+            break;
+        else:
+            print('Esse Aluno Não Está Matriculado') 
+    pass 
+
+def verificar_situacao ():
+    aluno = str(input("Digite o nome do aluno:"))
+    aluno = aluno.upper()
+    for a in boletins:
+        if(a.aluno == aluno):
+            media = (float(a.nota1) + float(a.nota2) + float(a.nota3))/3
+            if (media >= 6 and float(a.falta) <= 150):
+                print("Aluno Aprovado");
+            else:
+                print("Aluno Reprovado");
+
+def adicionar_matricula ():
+
+    obj = Boletim()
+    
+    aluno = str(input("Digite o nome do aluno:"))
+    aluno = aluno.upper()
+    obj.aluno = aluno
+
+    if len(boletins) == 0:
+        boletins.append(obj)
+    else:
+        for a in boletins:
+            if(a.aluno == aluno):
+                print('Aluno já está Matriculado')
+            else:
+                boletins.append(obj)
+                print('Aluno Matriculado')  
+                break;
+    
+
+opcao = menu() 
+while opcao != 9: 
+    if opcao == "1": 
+        adicionar_matricula() 
+    elif opcao == "2":  
+        remover_matricula()
+    elif opcao == "3":  
+        lancar_notas()
+    elif opcao == "4":  
+        lancar_faltas()
+    elif opcao == "5":  
+        listar_alunos()
+    elif opcao == "6":  
+        verificar_situacao()
+    elif opcao == "7":  
+        ver_diario()
+    opcao = menu()
